@@ -40,11 +40,11 @@ jobs:
           VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: //')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Get current date
-        id: get_date
+      - name: Get current datetime
+        id: get_datetime
         run: |
-          DATE=$(date +'%Y-%m-%d')
-          echo "DATE=$DATE" >> $GITHUB_ENV
+          DATETIME=$(date +'%Y%m%d%H%M%S')
+          echo "DATETIME=$DATETIME" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -52,8 +52,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.VERSION }}
-          release_name: "Release ${{ env.VERSION }} - ${{ env.DATE }}"
+          tag_name: "v${{ env.VERSION }}-${{ env.DATETIME }}"
+          release_name: "Release ${{ env.VERSION }} - ${{ env.DATETIME }}"
           draft: false
           prerelease: false
 
