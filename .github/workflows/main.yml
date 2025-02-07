@@ -20,7 +20,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter_version: '3.19.0'
+          channel: 'stable'
 
       - name: Install dependencies
         run: flutter pub get
@@ -33,11 +33,15 @@ jobs:
 
       - name: Extract version
         id: extract_version
-        run: echo "VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: //')" >> $GITHUB_ENV
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: //')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Get current date
         id: get_date
-        run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+        run: |
+          DATE=$(date +'%Y-%m-%d')
+          echo "DATE=$DATE" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
